@@ -153,23 +153,7 @@ All SQL queries developed for this project are available in the `queries.sql` fi
 
 Feel free to reach out with questions or suggestions. Here's an example query for reference:
 
-### Example Query
-**Question**: Retrieve the total sales revenue for each store in a specific country.
-```sql
-SELECT 
-    s.store_name, 
-    SUM(sales.qty * sales.unit_price) AS total_revenue
-FROM 
-    sales
-JOIN 
-    stores s ON sales.store_id = s.store_id
-WHERE 
-    s.country = 'USA'
-GROUP BY 
-    s.store_name
-ORDER BY 
-    total_revenue DESC;
-```
+
 
 ---
 
