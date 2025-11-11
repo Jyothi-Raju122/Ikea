@@ -74,7 +74,39 @@ This project tackles the following business problems:
 1. Identify the top 5 best-selling products.
 2. List all products that are low in stock (below the reorder level).
 3. Calculate total sales revenue for each store.
+```sql
+
+SELECT
+	s.store_id,
+	st.store_name,
+	ROUND(SUM(s.net_sales)::NUMERIC,2)
+FROM
+	sales s  
+	JOIN stores st  
+	ON st.store_id = s.store_id
+GROUP BY 1,2
+
+```
+
 4. Find the top 3 stores with the highest sales in a specific country.
+```sql
+
+SELECT 
+    s.store_name, 
+    SUM(sales.qty * sales.unit_price) AS total_revenue
+FROM 
+    sales
+JOIN 
+    stores s ON sales.store_id = s.store_id
+WHERE 
+    s.country = 'USA'
+GROUP BY 
+    s.store_name
+ORDER BY 
+    total_revenue DESC;
+```
+
+
 5. Retrieve sales data for the last 6 months.
 
 ### Medium to Hard-Level Queries
