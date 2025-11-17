@@ -141,6 +141,16 @@ ORDER BY
 
 
 5. Retrieve sales data for the last 6 months.
+```sql
+SELECT
+	*
+FROM
+	sales
+WHERE
+	order_date BETWEEN '2023-06-01' AND '2023-12-31'
+ORDER BY order_date ASC
+
+```
 
 ### Medium to Hard-Level Queries
 1. Determine the product category contributing the most to revenue.
