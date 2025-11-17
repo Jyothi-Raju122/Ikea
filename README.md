@@ -88,7 +88,24 @@ LIMIT 5
 
 ```
 
-2. List all products that are low in stock (below the reorder level).
+2. List all products that are low in stock.
+```sql
+SELECT
+	i.product_id,
+	p.product_name,
+	i.current_stock,
+	i.reorder_level
+FROM
+	inventory i
+	JOIN
+	products p
+	ON p.product_id = i.product_id
+WHERE
+	i.current_stock < i.reorder_level
+```
+
+
+
 3. Calculate total sales revenue for each store.
 ```sql
 
