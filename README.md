@@ -72,6 +72,22 @@ This project tackles the following business problems:
 
 ### Easy-Level Queries
 1. Identify the top 5 best-selling products.
+```SQL
+SELECT
+	s.product_id,
+	p.product_name,
+	COUNT(order_id)
+FROM
+	products p
+	JOIN
+	sales s
+	ON s.product_id = p.product_id
+GROUP BY 1,2
+ORDER BY 3 DESC
+LIMIT 5
+
+```
+
 2. List all products that are low in stock (below the reorder level).
 3. Calculate total sales revenue for each store.
 ```sql
