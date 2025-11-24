@@ -319,8 +319,8 @@ Feel free to reach out with questions or suggestions. Here's an example query fo
 
 ## Contact Me
 
-📧 **[Email] Jyothikrishnaraju122@gmail.com  
-💼 **[LinkedIn]()**  
+📧 [Email] Jyothikrishnaraju122@gmail.com  
+📞 Phone: 647-965-5153
 
 ---
 
