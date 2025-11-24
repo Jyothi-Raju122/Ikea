@@ -311,7 +311,7 @@ All SQL queries developed for this project are available in the `queries.sql` fi
 
 ## Questions & Feedback
 
-Feel free to reach out with questions or suggestions. Here's an example query for reference:
+If you have any questions or feedback, feel free to create an issue or reach out!
 
 
 
