@@ -275,11 +275,6 @@ FROM
 GROUP BY 1
 ORDER BY ROUND(sum(net_sales)::Numeric,2) DESC
 ```
-1. Determine the product category contributing the most to revenue.
-2. Identify stores that need inventory replenishment for specific products.
-3. Analyze monthly sales trends for each store over the past year.
-4. Calculate the impact of discounts on total sales revenue.
-5. Rank stores by their overall sales performance using window functions.
 
 ---
 
@@ -324,7 +319,7 @@ Feel free to reach out with questions or suggestions. Here's an example query fo
 
 ## Contact Me
 
-📧 **[Email](mailto:your.email@example.com)**  
+📧 **[Email] Jyothikrishnaraju122@gmail.com  
 💼 **[LinkedIn]()**  
 
 ---
