@@ -324,10 +324,10 @@ If you have any questions or feedback, feel free to create an issue or reach out
 
 ---
 
-## ERD (Entity-Relationship Diagram)
+## ERD (Entity-Relationship Diagram) 
 
 Here’s the ERD for the IKEA Retail Sales SQL Project:
 
-![ERD Placeholder](https://github.com/najirh/sql-b01-ikea/blob/main/IKEA.png)
+![ERD Placeholder](https://github.com/Jyothi-Raju122/Ikea/blob/main/IKEA%20ERD.png)
 
 ---
