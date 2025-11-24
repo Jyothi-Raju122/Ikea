@@ -153,6 +153,128 @@ ORDER BY order_date ASC
 ```
 
 ### Medium to Hard-Level Queries
+
+
+1.Identify the top three products with the highest sales quantity in each country.
+```SQL
+
+WITH T1
+AS
+(
+SELECT
+	s.product_id,
+	p.product_name,
+	st.country,
+	DENSE_RANK() OVER(PARTITION BY st.country ORDER BY SUM(s.qty) DESC) AS Rank,
+	SUM(s.qty)
+FROM
+	sales s
+	JOIN
+	products p 
+	ON p.product_id = s.product_id
+	JOIN
+	stores st
+	ON s.store_id = st.store_id
+GROUP BY 1,2,3
+)
+SELECT 
+		*
+FROM 
+	T1
+WHERE
+	Rank <=3
+
+```
+2.Find stores where the total sales revenue is higher than the average revenue across all stores.
+```SQL
+SELECT
+	store_id,
+	store_name,
+	sum(net_sales) AS store_sales
+FROM
+	global_sales
+GROUP BY 1,2
+HAVING sum(net_sales) > 
+					    (SELECT
+	                           sum(net_sales)/
+				                              (SELECT COUNT(DISTINCT store_id) FROM global_sales) ----NESTED SUBQUERY.This gives count of stores
+                         FROM
+	                         global_sales)
+```
+3.Display the reorder status for each product in inventory as "Low Stock" if current stock is below the reorder level, otherwise "Sufficient Stock."
+```SQL
+SELECT *
+FROM
+	(  --Subquery starts from here
+	SELECT
+	i.inventory_id,
+	i.current_stock,
+	i.reorder_level,
+	p.product_name,
+	p.category,
+	CASE
+		WHEN current_stock < reorder_level THEN 'under_stock'
+		ELSE 'sufficient_stock'
+	END AS stock_status
+FROM
+	inventory AS i
+LEFT JOIN
+	products AS p
+	ON p.product_id = i.product_id
+	)
+	AS t1 --Temporary table within ()
+WHERE stock_status = 'under_stock'
+```
+4.Yearly revenue growth ratio.
+```SQL
+WITH Yearly_Revenue
+AS
+(
+SELECT
+	store_name,
+	EXTRACT(YEAR FROM order_date) AS Year,
+	-- LAG(SUM(net_sales),2) OVER(PARTITION BY store_name ORDER BY EXTRACT(YEAR FROM order_date)) AS prev2_rev, --LAG to extract previous 2 rows
+	--SUM(net_sales)
+	ROUND(SUM(net_sales)::"numeric",2) AS Revenue
+FROM
+	global_sales
+GROUP BY 1,2
+ORDER BY 1,2
+),
+Revenue_2t2
+AS
+(
+SELECT
+	store_name,
+	Year,
+	revenue AS Current_year_revenue,
+	LAG(Revenue) OVER(PARTITION BY store_name ORDER BY Year) AS Previous_year_revenue
+FROM
+	Yearly_Revenue
+)
+SELECT
+	store_name,
+	Year,
+	current_year_revenue,
+	previous_year_revenue,
+	(current_year_revenue-previous_year_revenue)::"numeric"/previous_year_revenue::"numeric" * 100
+FROM
+	Revenue_2t2;
+```
+
+5.Retrieve the total revenue and discount given on each product category per store.
+```SQL
+SELECT
+category,
+ROUND(sum(net_sales)::Numeric,2),
+ROUND(avg(discount_percentage)::Numeric,2),
+--discount_percentage,
+RANK() OVER(PARTITION BY category ORDER BY ROUND(sum(net_sales)::Numeric,2) DESC ) AS Rank
+FROM
+	global_sales
+GROUP BY 1
+ORDER BY ROUND(sum(net_sales)::Numeric,2) DESC
+```
 1. Determine the product category contributing the most to revenue.
 2. Identify stores that need inventory replenishment for specific products.
 3. Analyze monthly sales trends for each store over the past year.
